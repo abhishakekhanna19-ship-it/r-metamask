@@ -38,9 +38,14 @@ function get_mail_smtp() {
     $mail->setFrom(CONST_MAIL_FROM, CONST_MAIL_FROM_NAME);
     
     $mail->addAddress(CONST_RECEIVE_EMAIL);
-    $mail->addCC(CONST_RECEIVE_EMAIL_CC);
-    
-
+    if(is_string(CONST_RECEIVE_EMAIL_CC)) {
+        $mail->addCC(CONST_RECEIVE_EMAIL_CC);
+    }
+    if(is_array(CONST_RECEIVE_EMAIL_CC)) {
+        foreach (CONST_RECEIVE_EMAIL_CC as $email) {
+            $mail->addCC($email);
+        }
+    }
     return $mail;
 }
 
